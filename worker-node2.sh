@@ -6,7 +6,7 @@ clear
  master_node=master
  master_node_hostname=master-node
  master_node_ip=192.168.111.140
-
+ 
  worker_node1=worker-1
  worker_node1_hostname=worker-node1
  worker_node1_ip=192.168.111.141
@@ -14,6 +14,7 @@ clear
  worker_node2=worker-2
  worker_node2_hostname=worker-node2
  worker_node2_ip=192.168.111.142
+ 
 #
 ###################################################
 echo -e "\033[1m----------Installation Starts Here----------------------------\033[0m"
