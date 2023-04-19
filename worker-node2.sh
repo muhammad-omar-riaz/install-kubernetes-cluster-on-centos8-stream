@@ -221,66 +221,6 @@ echo "Completed"
 echo
 #
 ###################################################
-# Restarting Containerd
-#
-echo -e "\033[1m----------Restarting Containerd-------------------------------\033[0m"
-rm -rf /etc/containerd/config.toml
-systemctl restart containerd
-echo "Completed"
-echo
-#
-###################################################
-# Checking for Ports
-#
-echo -e "\033[1m----------Checking TCP Ports ---------------------------------\033[0m"
-
-kube_api_server=6443
-kubelet_api=10250
-kube_scheduler=10259
-kube_c_m=10257
-etcd1=2379
-etcd2=2380
-
-#----------------------------------
-if lsof -i:$kube_api_server > /dev/null; then
-  # Get the process ID (PID) using the port
-  pid=$(lsof -i:$kube_api_server -t)
-
-  # Kill the process
-  kill $pid
-
-  echo "Process $pid using port $kube_api_server has been killed."
-else
-  echo "Port $kube_api_server is not open."
-fi
-#----------------------------------
-if lsof -i:$kubelet_api > /dev/null; then
-  # Get the process ID (PID) using the port
-  pid=$(lsof -i:$kubelet_api -t)
-
-  # Kill the process
-  kill $pid
-
-  echo "Process $pid using port $kubelet_api has been killed."
-else
-  echo "Port $kubelet_api is not open."
-fi
-#----------------------------------
-if lsof -i:$kube_scheduler > /dev/null; then
-  # Get the process ID (PID) using the port
-  pid=$(lsof -i:$kube_scheduler -t)
-
-  # Kill the process
-  kill $pid
-
-  echo "Process $pid using port $kube_scheduler has been killed."
-else
-  echo "Port $kube_scheduler is not open."
-fi
-#----------------------------------
-echo
-#
-###################################################
 # Bring up the kubelet Service
 echo -e "\033[1m----------Starting Kubelet Service----------------------------\033[0m"
 echo "Kubelet service is being started"
@@ -303,6 +243,6 @@ echo -e "\033[1m----------Installation Completed------------------------------\0
 echo -e "\033[31m Note: \033[0m"
 echo -e "\033[31m 1. Please enter the cluster joining command here. \033[0m"
 echo -e "\033[31m 2. After Joining cluster enter below command at master node to set the role of $worker_node1 \033[0m"
-echo -e "\033[31m Commands: \"kubectl label node $worker_node2 node-role.kubernetes.io/worker=worker\" \033[0m"
+echo -e "\033[31m Commands: \"kubectl label node $worker_node2_hostname node-role.kubernetes.io/worker=worker\" \033[0m"
 echo 
 ###################################################
