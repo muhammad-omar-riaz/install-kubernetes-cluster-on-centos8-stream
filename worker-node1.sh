@@ -100,13 +100,6 @@ swapoff -a
 echo "Completed"
 echo
 #
-###################################################
-# Upgrading
-echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
-dnf -y upgrade >/dev/null 2>&1
-echo "Completed"
-echo
-#
 ##################################################
 # Deleting Previous Versions If Installed
 #
@@ -151,6 +144,13 @@ echo "80%"
 sudo dnf remove -y  podman runc >/dev/null 2>&1
 echo "100%"
 
+echo "Completed"
+echo
+#
+###################################################
+# Upgrading
+echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
+dnf -y upgrade >/dev/null 2>&1
 echo "Completed"
 echo
 #
