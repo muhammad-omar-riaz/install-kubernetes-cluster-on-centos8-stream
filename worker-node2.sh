@@ -296,7 +296,10 @@ echo
 # Installation Completion
 #
 echo -e "\033[1m----------Installation Completed------------------------------\033[0m"
-echo "Please enter the cluster joining command here: "
-echo
+echo "Note:"
+echo "1. Please enter the cluster joining command here."
+echo "2. After Joining cluster enter below command at master node to set the role of $worker_node2"
+echo "Commands: kubectl label node $worker_node2 node-role.kubernetes.io/worker=worker"
+echo 
 #
 ###################################################
