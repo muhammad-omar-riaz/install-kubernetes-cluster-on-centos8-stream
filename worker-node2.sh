@@ -58,7 +58,6 @@ $master_node_ip $master_node $master_node_hostname
 $worker_node1_ip $worker_node1 $worker_node1_hostname
 $worker_node2_ip $worker_node2 $worker_node2_hostname
 EOF
-
 echo "Completed"
 echo
 echo -e "\033[1m----------Updated /etc/hosts file-----------------------------\033[0m"
@@ -82,13 +81,10 @@ echo
 echo -e "\033[1m----------Updating Firewall-----------------------------------\033[0m"
 systemctl disable firewalld
 systemctl stop firewalld
-
 modprobe br_netfilter
 echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
-
 # load new rules
 sysctl --system >/dev/null 2>&1
-
 echo "Completed"
 echo
 #
@@ -115,35 +111,27 @@ sudo dnf remove -y docker \
         docker-engine \
         >/dev/null 2>&1
 echo "10%"
-
 sudo rm -rf /var/lib/docker
 sudo rm -rf /etc/docker
 echo "20%"
-
 if [ -d "/var/lib/kubelet" ]; then
   find /var/lib/kubelet | xargs -n 1 findmnt -n -t tmpfs -o TARGET -T | uniq | xargs -r umount -v  >/dev/null 2>&1
   sudo sudo rm -r -f /etc/kubernetes /var/lib/kubelet /var/lib/etcd >/dev/null 2>&1
 else
   echo "40%"
 fi
-
 iptables --flush
-
 sudo rm -rf ~/.kube
 sudo rm -rf /etc/kubernetes
-
 sudo rm -rf /etc/yum.repos.d/kubernetes.repo
 sudo rm -rf /var/lib/etcd/
 sudo rm -rf /var/lib/kubelet
 sudo rm -rf /etc/kubernetes
 echo "60%"
-
 sudo dnf remove -y  kubelet kubeadm kubectl >/dev/null 2>&1
 echo "80%"
-
 sudo dnf remove -y  podman runc >/dev/null 2>&1
 echo "100%"
-
 echo "Completed"
 echo
 #
@@ -161,31 +149,24 @@ echo -e "\033[1m----------Installing Pre-requisites---------------------------\0
 echo "0%"
 sudo dnf install -y yum-utils >/dev/null 2>&1
 echo "10%"
-
 sudo dnf config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo \
     >/dev/null 2>&1
 echo "20%"
-
 sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin >/dev/null 2>&1
 echo "40%"
-
 sudo systemctl enable docker >/dev/null 2>&1
 echo "60%"
 sleep 10
-
 sudo systemctl start docker >/dev/null 2>&1
 echo "80%"
-
 docker_status=$(sudo systemctl is-active docker)
-
 if [ $docker_status == "active" ]; then
         echo "100%"
 else
         exit
 fi
-
 echo "Completed"
 echo
 #
@@ -193,22 +174,18 @@ echo
 # Checking for Ports
 #
 echo -e "\033[1m----------Checking TCP Ports ---------------------------------\033[0m"
-
 kube_api_server=6443
 kubelet_api=10250
 kube_scheduler=10259
 kube_c_m=10257
 etcd1=2379
 etcd2=2380
-
 #----------------------------------
 if lsof -i:$kube_api_server > /dev/null; then
   # Get the process ID (PID) using the port
   pid=$(lsof -i:$kube_api_server -t)
-
   # Kill the process
   kill $pid
-
   echo "Process $pid using port $kube_api_server has been killed."
 else
   echo "Port $kube_api_server is not open."
@@ -217,10 +194,8 @@ fi
 if lsof -i:$kubelet_api > /dev/null; then
   # Get the process ID (PID) using the port
   pid=$(lsof -i:$kubelet_api -t)
-
   # Kill the process
   kill $pid
-
   echo "Process $pid using port $kubelet_api has been killed."
 else
   echo "Port $kubelet_api is not open."
@@ -229,10 +204,8 @@ fi
 if lsof -i:$kube_scheduler > /dev/null; then
   # Get the process ID (PID) using the port
   pid=$(lsof -i:$kube_scheduler -t)
-
   # Kill the process
   kill $pid
-
   echo "Process $pid using port $kube_scheduler has been killed."
 else
   echo "Port $kube_scheduler is not open."
@@ -245,7 +218,6 @@ echo
 #
 echo -e "\033[1m----------Installing Kubernetes-------------------------------\033[0m"
 echo "0%"
-
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -256,15 +228,10 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
 exclude=kubelet kubeadm kubectl
 EOF
-
 echo "25%"
-
 dnf upgrade -y >/dev/null 2>&1
-
 echo "50%"
-
 dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes >/dev/null 2>&1
-
 echo "75%"
 echo "100%"
 echo "Completed"
