@@ -300,7 +300,6 @@ echo
 # Installation Completion
 #
 echo -e "\033[1m----------Installation Completed------------------------------\033[0m"
-echo "Note:"
 echo -e "\033[31m Note: \033[0m"
 echo -e "\033[31m 1. Please enter the cluster joining command here. \033[0m"
 echo -e "\033[31m 2. After Joining cluster enter below command at master node to set the role of $worker_node1 \033[0m"
