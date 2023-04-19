@@ -69,13 +69,6 @@ echo "}"
 echo
 #
 ###################################################
-# Upgrading
-echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
-dnf -y upgrade >/dev/null 2>&1
-echo "Completed"
-echo
-#
-###################################################
 # Disable SELinux enforcement
 #
 echo -e "\033[1m----------Disable SELinux-------------------------------------\033[0m"
@@ -108,6 +101,13 @@ swapoff -a
 echo "Completed"
 echo
 #
+###################################################
+# Upgrading
+echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
+dnf -y upgrade >/dev/null 2>&1
+echo "Completed"
+echo
+#
 ##################################################
 # Deleting Previous Versions If Installed
 #
@@ -122,17 +122,17 @@ sudo dnf remove -y docker \
         docker-logrotate \
         docker-engine \
         >/dev/null 2>&1
-echo "5%"
+echo "10%"
 
 sudo rm -rf /var/lib/docker
 sudo rm -rf /etc/docker
-echo "25%"
+echo "20%"
 
 if [ -d "/var/lib/kubelet" ]; then
   find /var/lib/kubelet | xargs -n 1 findmnt -n -t tmpfs -o TARGET -T | uniq | xargs -r umount -v  >/dev/null 2>&1
   sudo sudo rm -r -f /etc/kubernetes /var/lib/kubelet /var/lib/etcd >/dev/null 2>&1
 else
-  echo "50%"
+  echo "40%"
 fi
 
 iptables --flush
@@ -144,10 +144,14 @@ sudo rm -rf /etc/yum.repos.d/kubernetes.repo
 sudo rm -rf /var/lib/etcd/
 sudo rm -rf /var/lib/kubelet
 sudo rm -rf /etc/kubernetes
-echo "75%"
+echo "60%"
 
 sudo dnf remove -y  kubelet kubeadm kubectl >/dev/null 2>&1
+echo "80%"
+
+sudo dnf remove -y  podman runc >/dev/null 2>&1
 echo "100%"
+
 echo "Completed"
 echo
 #
