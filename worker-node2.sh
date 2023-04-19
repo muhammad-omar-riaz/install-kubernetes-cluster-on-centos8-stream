@@ -191,6 +191,57 @@ echo "Completed"
 echo
 #
 ###################################################
+# Checking for Ports
+#
+echo -e "\033[1m----------Checking TCP Ports ---------------------------------\033[0m"
+
+kube_api_server=6443
+kubelet_api=10250
+kube_scheduler=10259
+kube_c_m=10257
+etcd1=2379
+etcd2=2380
+
+#----------------------------------
+if lsof -i:$kube_api_server > /dev/null; then
+  # Get the process ID (PID) using the port
+  pid=$(lsof -i:$kube_api_server -t)
+
+  # Kill the process
+  kill $pid
+
+  echo "Process $pid using port $kube_api_server has been killed."
+else
+  echo "Port $kube_api_server is not open."
+fi
+#----------------------------------
+if lsof -i:$kubelet_api > /dev/null; then
+  # Get the process ID (PID) using the port
+  pid=$(lsof -i:$kubelet_api -t)
+
+  # Kill the process
+  kill $pid
+
+  echo "Process $pid using port $kubelet_api has been killed."
+else
+  echo "Port $kubelet_api is not open."
+fi
+#----------------------------------
+if lsof -i:$kube_scheduler > /dev/null; then
+  # Get the process ID (PID) using the port
+  pid=$(lsof -i:$kube_scheduler -t)
+
+  # Kill the process
+  kill $pid
+
+  echo "Process $pid using port $kube_scheduler has been killed."
+else
+  echo "Port $kube_scheduler is not open."
+fi
+#----------------------------------
+echo
+#
+###################################################
 # Installing Kubernetes
 #
 echo -e "\033[1m----------Installing Kubernetes-------------------------------\033[0m"
@@ -219,22 +270,6 @@ echo "75%"
 echo "100%"
 echo "Completed"
 echo
-#
-###################################################
-# Bring up the kubelet Service
-echo -e "\033[1m----------Starting Kubelet Service----------------------------\033[0m"
-echo "Kubelet service is being started"
-sudo systemctl enable kubelet && sudo systemctl start kubelet >/dev/null 2>&1
-
-kubelet_status=$(sudo systemctl is-active kubelet)
-
-if [ $docker_status == "active" ]; then
-        echo "Completed"
-else
-        exit
-fi
-
-echo 
 #
 ###################################################
 # Installation Completion
