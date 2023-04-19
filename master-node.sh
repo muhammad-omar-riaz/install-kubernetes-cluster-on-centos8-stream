@@ -31,22 +31,23 @@ echo
 #
 echo -e "\033[1m----------Updaing /etc/hosts file Phase-1---------------------\033[0m"
 
-if grep -q "$master_node_ip.*$master_node_hostname" /etc/hosts; then sed -i "/$master_node_ip.*$master_node_hostname/d" /etc/hosts 
-else 
-   continue 
+if grep -q "$master_node_ip.*$master_node_hostname" /etc/hosts; then sed -i "/$master_node_ip.*$master_node_hostname/d" /etc/hosts
+else
+        echo "No old entry found against $master_node with IP Address $master_node_ip"
 fi
-if grep -q "$worker_node1_ip.*$worker_node1_hostname" /etc/hosts; then sed -i "/$worker_node1_ip.*$worker_node1_hostname/d" /etc/hosts 
-else 
-   continue 
+
+if grep -q "$worker_node1_ip.*$worker_node1_hostname" /etc/hosts; then sed -i "/$worker_node1_ip.*$worker_node1_hostname/d" /etc/hosts
+else
+        echo "No old entry found against $worker_node1 with IP Address $worker_node1_ip"
 fi
-if grep -q "$worker_node2_ip.*$worker_node2_hostname" /etc/hosts; then sed -i "/$worker_node2_ip.*$worker_node2_hostname/d" /etc/hosts 
-else 
-   continue 
+
+if grep -q "$worker_node2_ip.*$worker_node2_hostname" /etc/hosts; then sed -i "/$worker_node2_ip.*$worker_node2_hostname/d" /etc/hosts
+else
+        echo "No old entry found against $worker_node2 with IP Address $worker_node2_ip"
 fi
 
 echo "Completed"
 echo
-#
 ###################################################
 # Adding newlines to /etc/hosts
 #
