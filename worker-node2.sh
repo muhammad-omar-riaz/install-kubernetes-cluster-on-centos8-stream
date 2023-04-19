@@ -6,7 +6,7 @@ clear
  master_node=master
  master_node_hostname=master-node
  master_node_ip=192.168.111.140
- 
+
  worker_node1=worker-1
  worker_node1_hostname=worker-node1
  worker_node1_ip=192.168.111.141
@@ -14,7 +14,6 @@ clear
  worker_node2=worker-2
  worker_node2_hostname=worker-node2
  worker_node2_ip=192.168.111.142
- 
 #
 ###################################################
 echo -e "\033[1m----------Installation Starts Here----------------------------\033[0m"
@@ -254,7 +253,7 @@ baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey = https: //packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
 exclude=kubelet kubeadm kubectl
 EOF
 
@@ -277,7 +276,8 @@ echo
 echo -e "\033[1m----------Installation Completed------------------------------\033[0m"
 echo -e "\033[31m Note: \033[0m"
 echo -e "\033[31m 1. Please enter the cluster joining command here. \033[0m"
-echo -e "\033[31m 2. After Joining cluster enter below command at master node to set the role of $worker_node1 \033[0m"
+echo -e "\033[31m 2. After Joining cluster enter below command at master node to set the role of $worker_node2 \033[0m"
 echo -e "\033[31m Commands: \"kubectl label node $worker_node2_hostname node-role.kubernetes.io/worker=worker\" \033[0m"
 echo 
+#
 ###################################################
