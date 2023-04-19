@@ -101,13 +101,6 @@ swapoff -a
 echo "Completed"
 echo
 #
-###################################################
-# Upgrading
-echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
-dnf -y upgrade >/dev/null 2>&1
-echo "Completed"
-echo
-#
 ##################################################
 # Deleting Previous Versions If Installed
 #
@@ -152,6 +145,13 @@ echo "80%"
 sudo dnf remove -y  podman runc >/dev/null 2>&1
 echo "100%"
 
+echo "Completed"
+echo
+#
+###################################################
+# Upgrading
+echo -e "\033[1m----------Upgrading-------------------------------------------\033[0m"
+dnf -y upgrade >/dev/null 2>&1
 echo "Completed"
 echo
 #
@@ -304,6 +304,6 @@ echo "Note:"
 echo -e "\033[31m Note: \033[0m"
 echo -e "\033[31m 1. Please enter the cluster joining command here. \033[0m"
 echo -e "\033[31m 2. After Joining cluster enter below command at master node to set the role of $worker_node1 \033[0m"
-echo -e "\033[31m Commands: \"kubectl label node $worker_node1 node-role.kubernetes.io/worker=worker\"" \033[0m"
+echo -e "\033[31m Commands: \"kubectl label node $worker_node2 node-role.kubernetes.io/worker=worker\" \033[0m"
 echo 
 ###################################################
