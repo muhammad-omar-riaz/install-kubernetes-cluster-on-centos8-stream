@@ -305,13 +305,12 @@ echo
 # Installation Completion
 #
 echo -e "\033[1m----------Installation Completed------------------------------\033[0m"
-echo You can find log file in $HOME/kubeadm-init.log
+echo -e "\033[31m You can find log file in \"$HOME/kubeadm-init.log\" \033[0m"
 echo
-echo "You can join any worker node by using below command: "
+echo -e "\033[31m You can join any worker node by using below command: \033[0m"
 tail -2 $HOME/kubeadm-init.log
 echo
-echo "Here is the output of kubectl get nodes"
+echo -e "\033[31m Here is the output of \"kubectl get nodes\" \033[0m"
 kubectl get nodes
-
 #
 ###################################################
