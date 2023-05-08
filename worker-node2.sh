@@ -154,7 +154,7 @@ sudo dnf config-manager \
     https://download.docker.com/linux/centos/docker-ce.repo \
     >/dev/null 2>&1
 echo "20%"
-sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin >/dev/null 2>&1
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin >/dev/null 2>&1
 echo "40%"
 sudo systemctl enable docker >/dev/null 2>&1
 echo "60%"
