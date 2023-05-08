@@ -234,6 +234,8 @@ dnf upgrade -y >/dev/null 2>&1
 echo "50%"
 dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes >/dev/null 2>&1
 echo "75%"
+rm -rf /etc/containerd/config.toml
+systemctl restart containerd
 echo "100%"
 echo "Completed"
 echo
